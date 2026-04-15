@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bildin | Control operativo para construcción</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow+Semi+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg-primary: #0b0f14;
@@ -33,7 +33,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 118px; }
 
   body {
     background:
@@ -47,50 +47,154 @@
     overflow-x: hidden;
   }
 
-  .topbar { background: var(--red-top); height: 6px; width: 100%; }
+  .topbar { display: none; }
 
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(11,15,20,0.96);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 0 var(--gutter);
+  .db-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #000;
   }
-  .nav-inner {
-    width: min(100%, var(--shell-hero));
+  .db-header .nav-inner {
+    width: 100%;
+    max-width: 1850px;
     margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 62px;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    height: 106px;
   }
 
   .nav-logo {
     display: inline-flex;
     align-items: center;
+    flex: 0 0 auto;
     text-decoration: none;
   }
   .nav-logo img {
     display: block;
-    width: 132px;
-    height: auto;
+    width: auto;
+    height: 34px;
   }
 
-  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-  .nav-links a {
-    color: var(--gray-mid); text-decoration: none;
-    font-size: 0.875rem; font-weight: 500; letter-spacing: 0.03em;
-    transition: color 0.2s;
+  .nav-links {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
-  .nav-links a:hover { color: var(--white); }
+  .nav-links > li {
+    position: relative;
+    height: 106px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+  .nav-links > li > a {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 20px;
+    color: #fff;
+    font-family: 'Barlow Semi Condensed', 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .nav-links > li > a:hover,
+  .nav-links > li > a.is-active,
+  .nav-links > li:hover > a,
+  .nav-links > li:focus-within > a {
+    color: #fe7f00;
+  }
 
-  .nav-cta {
-    background: var(--orange) !important; color: #000 !important;
-    font-family: 'Barlow Condensed', sans-serif !important;
-    font-weight: 700 !important; font-size: 0.85rem !important;
-    letter-spacing: 0.08em !important; text-transform: uppercase !important;
-    padding: 0.42rem 1.1rem !important; border-radius: 5px !important;
-    transition: background 0.2s !important;
+  .nav-caret {
+    width: 8px;
+    height: 8px;
+    margin-top: -3px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    opacity: 0.65;
   }
-  .nav-cta:hover { background: var(--orange-dark) !important; }
+  .nav-submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 286px;
+    padding: 32px 0 25px;
+    margin: 0;
+    list-style: none;
+    text-align: left;
+    white-space: nowrap;
+    background: #122636;
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  }
+  .nav-links > li:hover .nav-submenu,
+  .nav-links > li:focus-within .nav-submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .nav-submenu li {
+    margin: 0;
+  }
+  .nav-submenu li + li {
+    margin-top: 10px;
+  }
+  .nav-submenu a {
+    display: block;
+    padding: 0 40px;
+    color: #fff;
+    font-family: 'Barlow Semi Condensed', 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 30px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .nav-submenu a:hover {
+    color: #fe7f00;
+  }
+
+  .nav-panel-button {
+    flex: 0 0 60px;
+    width: 60px;
+    height: 60px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    display: grid;
+    grid-template-columns: repeat(2, 9px);
+    place-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .nav-panel-button:hover {
+    background: rgba(255,255,255,0.26);
+  }
+  .nav-panel-button span {
+    width: 9px;
+    height: 9px;
+    border-radius: 38%;
+    background: #fff;
+    display: block;
+  }
 
   section { padding: 96px var(--gutter); }
   .shell {
@@ -174,7 +278,7 @@
     position: absolute;
     inset: auto 0 0 0;
     height: 120px;
-    background: linear-gradient(180deg, rgba(246,251,255,0) 0%, rgba(14,21,32,0.12) 58%, rgba(14,21,32,1) 100%);
+    background: linear-gradient(180deg, rgba(246,251,255,0) 0%, rgba(255,255,255,0.92) 100%);
     pointer-events: none;
   }
   .hero-shell {
@@ -303,6 +407,146 @@
 
   .hero-btns { display: flex; gap: 0.8rem; flex-wrap: wrap; }
   .hero-visual { position: relative; z-index: 2; width: min(100%, 780px); justify-self: end; margin-top: 1rem; }
+
+  /* CLIENT LOGOS */
+  .logo-strip {
+    padding: 44px 0 52px;
+    background: #fff;
+    color: #07172b;
+    overflow: hidden;
+  }
+  .logo-strip-inner {
+    width: min(100%, var(--shell-hero));
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .logo-strip-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.65rem;
+  }
+  .logo-strip-heading::after {
+    content: '';
+    flex: 1 1 auto;
+    height: 1px;
+    margin-bottom: 0.42rem;
+    background: linear-gradient(90deg, rgba(19,156,242,0.34), rgba(7,23,43,0.08), rgba(7,23,43,0));
+  }
+  .logo-strip-kicker {
+    display: block;
+    color: var(--orange);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .logo-strip h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2rem, 3.3vw, 3rem);
+    font-weight: 900;
+    line-height: 0.96;
+    color: #07172b;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+  .logo-strip h2 span {
+    color: var(--orange);
+  }
+  .logo-marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 46px;
+    margin: 0 -46px;
+  }
+  .logo-marquee::before,
+  .logo-marquee::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    width: min(10vw, 120px);
+    pointer-events: none;
+  }
+  .logo-marquee::before {
+    left: 0;
+    background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0) 100%);
+  }
+  .logo-marquee::after {
+    right: 0;
+    background: linear-gradient(270deg, #fff 0%, rgba(255,255,255,0) 100%);
+  }
+  .logo-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 4;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(7,23,43,0.06);
+    border-radius: 50%;
+    background: #fff;
+    color: #07172b;
+    box-shadow: 0 14px 34px rgba(7,23,43,0.13);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .logo-arrow:hover {
+    color: var(--orange);
+    transform: translateY(-50%) scale(1.04);
+    box-shadow: 0 16px 38px rgba(7,23,43,0.18);
+  }
+  .logo-arrow svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2.4;
+  }
+  .logo-arrow.is-left {
+    left: 4px;
+  }
+  .logo-arrow.is-right {
+    right: 4px;
+  }
+  .logo-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: logo-marquee 42s linear infinite;
+  }
+  .logo-marquee-track:hover {
+    animation-play-state: paused;
+  }
+  .logo-set {
+    display: flex;
+    align-items: center;
+    gap: clamp(2.2rem, 4vw, 4.5rem);
+    padding-right: clamp(2.2rem, 4vw, 4.5rem);
+  }
+  .logo-set img {
+    width: 132px;
+    height: 82px;
+    object-fit: contain;
+    flex: 0 0 auto;
+    display: block;
+  }
+  @keyframes logo-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .logo-marquee-track {
+      animation: none;
+    }
+  }
 
   /* Mock screen */
   .mock-screen {
@@ -691,212 +935,155 @@
   }
   .feature-row p { font-size: 0.88rem; color: var(--gray-mid); margin: 0; line-height: 1.6; max-width: 46ch; }
 
-  .product-modules {
-    display: grid;
-    gap: 4rem;
+  #plataforma {
+    position: relative;
+    overflow: hidden;
+    scroll-margin-top: 118px;
+    background:
+      linear-gradient(180deg, #f8fbff 0%, #edf6fc 52%, #ffffff 100%);
+    color: #07172b;
   }
-  .track-module {
+  #plataforma::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(7,23,43,0.045) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(7,23,43,0.035) 1px, transparent 1px);
+    background-size: 88px 88px;
+    mask-image: linear-gradient(180deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    pointer-events: none;
+  }
+  .product-modules {
+    position: relative;
+    z-index: 1;
     display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    gap: clamp(2rem, 4vw, 4rem);
+    gap: clamp(5rem, 8vw, 8rem);
+  }
+  .module-section {
+    display: grid;
+    gap: clamp(3rem, 5vw, 5rem);
+    scroll-margin-top: 118px;
+  }
+  .module-header {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .module-header h2 {
+    color: #07172b;
+    font-size: clamp(2.6rem, 5vw, 4.8rem);
+    line-height: 0.96;
+  }
+  .module-header h2 span {
+    color: var(--orange);
+  }
+  .module-row {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: clamp(2rem, 5vw, 5rem);
     align-items: center;
   }
-  .track-copy {
+  .module-row.is-reversed {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  }
+  .module-copy {
     max-width: 560px;
   }
-  .track-copy h2 {
-    margin-bottom: 0.55rem;
-    font-size: clamp(2.7rem, 4vw, 4rem);
-    line-height: 0.92;
+  .module-copy h3 {
+    margin-bottom: 0.85rem;
+    color: #07172b;
+    font-size: clamp(2rem, 3.4vw, 3.2rem);
+    line-height: 0.98;
   }
-  .track-subtitle {
-    margin-bottom: 1rem;
-    color: var(--orange-soft);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1.35rem, 2vw, 1.7rem);
-    font-weight: 700;
-    line-height: 1.1;
-  }
-  .track-copy > p {
+  .module-copy p {
     margin-bottom: 1.35rem;
-    color: #a8b7ca;
-    font-size: 0.98rem;
-    line-height: 1.75;
+    color: #40536a;
+    font-size: 1rem;
+    line-height: 1.78;
   }
   .track-benefits {
     display: grid;
-    gap: 0.7rem;
+    gap: 0.72rem;
     list-style: none;
   }
   .track-benefits li {
     position: relative;
-    padding-left: 1.5rem;
-    color: #d9e4f2;
-    font-size: 0.94rem;
+    padding-left: 1.55rem;
+    color: #18314d;
+    font-size: 0.98rem;
     line-height: 1.45;
   }
   .track-benefits li::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 0.55rem;
+    top: 0.58rem;
     width: 8px;
     height: 8px;
     border-radius: 50%;
     background: var(--orange);
-    box-shadow: 0 0 18px rgba(19,156,242,0.5);
+    box-shadow: 0 0 18px rgba(19,156,242,0.48);
+  }
+  .module-media {
+    min-width: 0;
+    display: grid;
+    place-items: center;
+  }
+  .module-media .laptop-frame {
+    width: min(100%, 920px);
+  }
+  .module-media.is-wide .laptop-frame {
+    width: min(108%, 980px);
   }
   .screen-stack {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.85rem;
-    align-items: stretch;
+    gap: clamp(0.7rem, 1.4vw, 1.15rem);
+    align-items: start;
+    width: min(100%, 760px);
   }
-  .workforce-carousel {
-    position: relative;
-    min-width: 0;
-  }
-  .workforce-stage {
-    display: grid;
-    align-items: center;
-    min-height: 460px;
-  }
-  .workforce-slide {
-    display: none;
-    animation: workforceFade 0.55s ease both;
-  }
-  .workforce-slide.active {
-    display: block;
-  }
-  .workforce-slide > .laptop-frame {
-    transform: scale(0.92);
-    transform-origin: center;
-  }
-  @keyframes workforceFade {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: none; }
-  }
-  .workforce-dots {
+  .showcase-phone-trio {
     display: flex;
     justify-content: center;
-    gap: 0.45rem;
-    margin-top: 1.35rem;
+    align-items: center;
+    gap: 0;
+    width: min(100%, 820px);
+    padding: clamp(1rem, 2vw, 1.8rem) 0;
+    overflow: visible;
   }
-  .workforce-dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.22);
-    border: 1px solid rgba(19,156,242,0.22);
-    transition: width 0.25s ease, background 0.25s ease;
+  .showcase-phone-trio .phone-frame {
+    width: 100%;
+    height: auto;
   }
-  .workforce-dot.active {
-    width: 28px;
-    background: var(--orange);
-  }
-  .screen-stack.is-analytical {
-    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-  }
-  .screen-stack.is-analytical .screen-card {
+  .showcase-phone-trio .screen-card {
     min-height: 0;
-    transform: none;
-  }
-  .screen-stack.is-analytical .screen-card.is-primary {
-    grid-row: 1 / span 2;
-    min-height: 420px;
-  }
-  .screen-stack.is-analytical .screen-card:not(.is-primary) {
-    min-height: 205px;
-  }
-  .screen-stack.is-analytical .screen-card:not(.is-primary) .screen-body {
-    min-height: 98px;
-    padding: 0.65rem;
-    gap: 0.42rem;
-  }
-  .screen-stack.is-analytical .screen-card:not(.is-primary) .screen-topbar {
-    padding-bottom: 0.45rem;
-  }
-  .screen-stack.is-analytical .screen-card:not(.is-primary) h3 {
-    margin-top: 0.7rem;
-  }
-  .screen-stack.is-analytical .screen-card:not(.is-primary) p {
-    font-size: 0.78rem;
-  }
-  .material-showcase {
-    display: grid;
-    gap: 1.1rem;
-    width: min(112%, 940px);
-    justify-self: center;
-  }
-  .material-carousel {
     position: relative;
-    min-width: 0;
+    flex: 0 0 clamp(160px, 18vw, 238px);
+    transform-origin: center bottom;
+    transition: transform 0.28s ease, filter 0.28s ease;
   }
-  .material-stage {
-    display: grid;
-    align-items: center;
-    min-height: 500px;
+  .showcase-phone-trio .screen-card + .screen-card {
+    margin-left: clamp(-4.4rem, -5vw, -2.4rem);
   }
-  .material-slide {
-    display: none;
-    animation: workforceFade 0.55s ease both;
+  .showcase-phone-trio .screen-card:nth-child(1) {
+    z-index: 1;
+    transform: rotate(-6deg) translateX(20px) translateY(10px);
   }
-  .material-slide.active {
-    display: block;
+  .showcase-phone-trio .screen-card:nth-child(2) {
+    z-index: 3;
+    transform: scale(1.05);
   }
-  .material-phone-row {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 250px));
-    gap: 1.35rem;
-    justify-content: center;
-    align-items: center;
+  .showcase-phone-trio .screen-card:nth-child(3) {
+    z-index: 1;
+    transform: rotate(6deg) translateX(-20px) translateY(10px);
   }
-  .material-monitor-row {
-    display: grid;
-    place-items: center;
-  }
-  .material-showcase .phone-frame {
-    height: 402px;
-    padding: 1.7rem 0.72rem 1.8rem;
-    border-radius: 28px;
-  }
-  .material-showcase .phone-frame::before {
-    width: 46px;
-    height: 5px;
-    top: 0.55rem;
-  }
-  .material-showcase .phone-frame::after {
-    width: 34px;
-    bottom: 0.72rem;
-  }
-  .material-showcase .laptop-frame {
-    width: min(100%, 940px);
-    padding: 1.15rem 1.15rem 1.55rem;
-    border-radius: 16px 16px 10px 10px;
-    box-shadow: 0 18px 42px rgba(0,0,0,0.24), inset 0 0 0 2px rgba(255,255,255,0.035);
-  }
-  .material-showcase .laptop-frame::before {
-    width: 86px;
-    bottom: 0.58rem;
-  }
-  .material-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.42rem;
-    margin-top: 1.1rem;
-  }
-  .material-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.22);
-    border: 1px solid rgba(19,156,242,0.22);
-    transition: width 0.25s ease, background 0.25s ease;
-  }
-  .material-dot.active {
-    width: 24px;
-    background: var(--orange);
+  .showcase-phone-trio .screen-image {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 40px rgba(19,156,242,0.1);
   }
   .screen-card {
     display: grid;
@@ -969,69 +1156,42 @@
     position: relative;
     display: grid;
     place-items: center;
-    height: 402px;
-    padding: 1.7rem 0.72rem 1.8rem;
-    overflow: hidden;
-    border: 1px solid rgba(19,156,242,0.22);
-    border-radius: 28px;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025)),
-      #07111f;
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.035), 0 18px 42px rgba(0,0,0,0.22);
+    height: auto;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
   .phone-frame::before {
-    content: '';
-    position: absolute;
-    top: 0.55rem;
-    left: 50%;
-    width: 46px;
-    height: 5px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.28);
-    transform: translateX(-50%);
+    content: none;
   }
   .phone-frame::after {
-    content: '';
-    position: absolute;
-    bottom: 0.72rem;
-    left: 50%;
-    width: 34px;
-    height: 3px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.22);
-    transform: translateX(-50%);
+    content: none;
   }
   .laptop-frame {
     position: relative;
     width: min(100%, 700px);
     margin: 0 auto;
-    padding: 1.1rem 1.1rem 1.45rem;
-    border: 1px solid rgba(19,156,242,0.24);
-    border-radius: 18px 18px 12px 12px;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025)),
-      #07111f;
-    box-shadow: 0 24px 58px rgba(0,0,0,0.3), inset 0 0 0 2px rgba(255,255,255,0.035);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
   .laptop-frame::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0.55rem;
-    width: 78px;
-    height: 4px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.24);
-    transform: translateX(-50%);
+    content: none;
   }
   .laptop-screen {
     display: grid;
     place-items: center;
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    border: 1px solid rgba(19,156,242,0.18);
-    border-radius: 10px;
+    border: 1px solid rgba(19,156,242,0.15);
+    border-radius: 16px;
     background: #ffffff;
+    box-shadow: 0 32px 64px rgba(7,23,43,0.12), 0 0 40px rgba(19,156,242,0.06);
   }
   .laptop-screen img {
     display: block;
@@ -2257,10 +2417,12 @@
     .bridge-copy h2 { max-width: 14ch; }
     .bridge-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .bridge-step:nth-child(2)::after { display: none; }
-    .track-module {
+    .module-row,
+    .module-row.is-reversed {
       grid-template-columns: 1fr;
+      gap: 2rem;
     }
-    .track-copy {
+    .module-copy {
       max-width: 720px;
     }
     .screen-stack {
@@ -2268,15 +2430,17 @@
       overflow-x: auto;
       padding-bottom: 2rem;
     }
-    .workforce-stage {
-      min-height: 460px;
+    .showcase-phone-trio {
+      width: min(100%, 680px);
+      overflow: visible;
+      padding-bottom: 1.8rem;
     }
-    .screen-stack.is-analytical {
-      grid-template-columns: minmax(340px, 1.15fr) minmax(260px, 0.85fr);
-      grid-template-rows: repeat(2, minmax(0, 1fr));
+    .showcase-phone-trio .screen-card {
+      flex-basis: clamp(145px, 24vw, 210px);
     }
-    .track-module.is-material .material-showcase { order: 1; }
-    .track-module.is-material .track-copy { order: 0; }
+    .showcase-phone-trio .screen-card + .screen-card {
+      margin-left: clamp(-3.6rem, -5vw, -2rem);
+    }
     .benefits-visual {
       grid-template-columns: 1fr;
     }
@@ -2307,10 +2471,61 @@
       border-right: none;
       border-bottom: 1px solid rgba(255, 255, 255, 0.22);
     }
-    nav .nav-links li:not(:last-child) { display: none; }
+    .db-header .nav-inner {
+      height: 72px;
+      padding: 0 18px;
+    }
+    .nav-logo img {
+      height: 30px;
+      max-width: 155px;
+      object-fit: contain;
+    }
+    .nav-links {
+      display: none;
+    }
+    .nav-panel-button {
+      flex-basis: 46px;
+      width: 46px;
+      height: 46px;
+      grid-template-columns: repeat(2, 7px);
+      gap: 5px;
+    }
+    .nav-panel-button span {
+      width: 7px;
+      height: 7px;
+    }
   }
 
   @media (max-width: 640px) {
+    .logo-strip {
+      padding: 34px 0 40px;
+    }
+    .logo-strip-heading {
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+    .logo-strip-heading::after {
+      display: none;
+    }
+    .logo-strip h2 {
+      font-size: 2rem;
+    }
+    .logo-marquee {
+      padding: 0 38px;
+      margin: 0 -18px;
+    }
+    .logo-arrow {
+      width: 36px;
+      height: 36px;
+    }
+    .logo-set {
+      gap: 2rem;
+      padding-right: 2rem;
+    }
+    .logo-set img {
+      width: 112px;
+      height: 72px;
+    }
     .cover-nav {
       min-height: 72px;
       gap: 1rem;
@@ -2433,48 +2648,54 @@
     .product-modules {
       gap: 4rem;
     }
+    .module-section {
+      gap: 2.6rem;
+    }
     .screen-stack {
       grid-template-columns: 1fr;
       overflow: visible;
       padding-bottom: 0;
     }
-    .workforce-stage {
-      min-height: 0;
+    .phone-frame,
+    .showcase-phone-trio .phone-frame {
+      height: auto;
     }
-    .phone-frame {
-      height: 390px;
+    .showcase-phone-trio {
+      width: min(100%, 340px);
+      padding: 0.75rem 0 1.25rem;
+      overflow: visible;
     }
-    .workforce-slide > .laptop-frame {
-      transform: none;
+    .showcase-phone-trio .screen-card {
+      flex: 0 0 clamp(112px, 35vw, 136px);
     }
-    .screen-stack.is-analytical {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
-    }
-    .screen-stack.is-analytical .screen-card.is-primary {
-      grid-row: auto;
-      min-height: 0;
-    }
-    .screen-stack.is-analytical .screen-card:not(.is-primary) {
-      min-height: 0;
-    }
-    .material-phone-row {
-      grid-template-columns: repeat(2, minmax(0, 220px));
-    }
-    .material-monitor-row {
-      grid-template-columns: 1fr;
-    }
-    .material-showcase .phone-frame {
-      height: 360px;
-    }
-    .material-showcase {
-      width: 100%;
+    .showcase-phone-trio .screen-card + .screen-card {
+      margin-left: clamp(-2.65rem, -10vw, -1.9rem);
     }
     .screen-card,
     .screen-card:nth-child(2),
     .screen-card:nth-child(3) {
       min-height: 0;
       transform: none;
+    }
+    .showcase-phone-trio .screen-card:nth-child(1) {
+      z-index: 1;
+      transform: rotate(-3deg) translateX(10px) translateY(4px);
+    }
+    .showcase-phone-trio .screen-card:nth-child(2) {
+      z-index: 3;
+      transform: scale(1.03);
+    }
+    .showcase-phone-trio .screen-card:nth-child(2),
+    .showcase-phone-trio .screen-card:nth-child(3) {
+      min-height: 0;
+    }
+    .showcase-phone-trio .screen-card:nth-child(3) {
+      z-index: 1;
+      transform: rotate(3deg) translateX(-10px) translateY(4px);
+    }
+    .showcase-phone-trio .screen-image {
+      border-radius: 16px;
+      box-shadow: 0 22px 44px rgba(0,0,0,0.42), 0 0 26px rgba(19,156,242,0.1);
     }
     .benefits-visual-section {
       padding-top: 72px;
@@ -2505,17 +2726,35 @@
 
 <div class="topbar"></div>
 
-<nav>
+<nav class="db-header" aria-label="Navegación principal">
   <div class="nav-inner">
-    <a class="nav-logo" href="#" aria-label="Bildin">
-      <img src="bildin-logo.png" alt="Bildin">
+    <a class="nav-logo" href="https://digitalbricks.com.pe/" aria-label="Digital Bricks">
+      <img src="https://digitalbricks.com.pe/wp-content/uploads/2024/08/Logo-Blanco-DB1.png" alt="Digital Bricks">
     </a>
     <ul class="nav-links">
-      <li><a href="#plataforma">Plataforma</a></li>
-      <li><a href="#roles">Digital Bricks</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#cta" class="nav-cta">Agenda una demo</a></li>
+      <li><a class="is-active" href="https://digitalbricks.com.pe/">Inicio</a></li>
+      <li><a href="https://digitalbricks.com.pe/nosotros/">Nosotros</a></li>
+      <li class="has-submenu">
+        <a href="https://digitalbricks.com.pe/servicios/">Servicios <span class="nav-caret" aria-hidden="true"></span></a>
+      </li>
+      <li class="has-submenu">
+        <a href="https://digitalbricks.com.pe/revizto/">Tecnologías <span class="nav-caret" aria-hidden="true"></span></a>
+        <ul class="nav-submenu" aria-label="Tecnologías">
+          <li><a href="https://digitalbricks.com.pe/revizto/">Revizto</a></li>
+          <li><a href="index.html">Bildin</a></li>
+        </ul>
+      </li>
+      <li><a href="https://digitalbricks.com.pe/eventos/">Eventos</a></li>
+      <li><a href="https://digitalbricks.com.pe/descargables/">Casos y Descargables</a></li>
+      <li><a href="https://digitalbricks.com.pe/db-news/">DB News</a></li>
+      <li><a href="https://digitalbricks.com.pe/contacto/">Contacto</a></li>
     </ul>
+    <button class="nav-panel-button" type="button" aria-label="Abrir panel">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
   </div>
 </nav>
 
@@ -2551,6 +2790,84 @@
               playsinline
             ></video>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENT LOGOS -->
+<section class="logo-strip" aria-labelledby="logo-strip-title">
+  <div class="logo-strip-inner">
+    <div class="logo-strip-heading">
+      <div>
+        <span class="logo-strip-kicker">Clientes que confían</span>
+        <h2 id="logo-strip-title">Ellos usan <span>Bildin</span></h2>
+      </div>
+    </div>
+    <div class="logo-marquee">
+      <button class="logo-arrow is-left" type="button" aria-label="Ver logos anteriores">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+      <button class="logo-arrow is-right" type="button" aria-label="Ver más logos">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 6l6 6-6 6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+      <div class="logo-marquee-track">
+        <div class="logo-set">
+          <img src="https://bildin.com.pe/companies/adelante-logo.webp" alt="Adelante">
+          <img src="https://bildin.com.pe/companies/cambrils-logo.webp" alt="Cambrils">
+          <img src="https://bildin.com.pe/companies/carmen-logo.webp" alt="Carmen">
+          <img src="https://bildin.com.pe/companies/cumbres-logo.webp" alt="Cumbres">
+          <img src="https://bildin.com.pe/companies/dvc-logo.webp" alt="DVC">
+          <img src="https://bildin.com.pe/companies/entrepisos-logo.webp" alt="Entrepisos Lima">
+          <img src="https://bildin.com.pe/companies/galilea-logo.webp" alt="Galilea">
+          <img src="https://bildin.com.pe/companies/grupo-flesan-logo.webp" alt="Grupo Flesan">
+          <img src="https://bildin.com.pe/companies/grupo-inka-logo.webp" alt="Grupo Inka">
+          <img src="https://bildin.com.pe/companies/inarco-logo.webp" alt="Inarco">
+          <img src="https://bildin.com.pe/companies/la-venturosa-logo.webp" alt="La Venturosa">
+          <img src="https://bildin.com.pe/companies/llosa-edificaciones-logo.webp" alt="Llosa Edificaciones">
+          <img src="https://bildin.com.pe/companies/vv-bravo-logo.webp" alt="VV Bravo">
+          <img src="https://bildin.com.pe/companies/alcamo-logo.webp" alt="Alcamo">
+          <img src="https://bildin.com.pe/companies/checor-logo.webp" alt="Checor">
+          <img src="https://bildin.com.pe/companies/brazil-logo.webp" alt="Brazil">
+          <img src="https://bildin.com.pe/companies/los-portales-logo.webp" alt="Los Portales">
+          <img src="https://bildin.com.pe/companies/overlay-logo.webp" alt="Overlay">
+          <img src="https://bildin.com.pe/companies/conssolida-logo.webp" alt="Conssolida">
+          <img src="https://bildin.com.pe/companies/digital-bricks-logo.webp" alt="Digital Bricks">
+          <img src="https://bildin.com.pe/companies/grau-dvi-logo.webp" alt="Grau DVI">
+          <img src="https://bildin.com.pe/companies/lider-logo.webp" alt="Lider">
+          <img src="https://bildin.com.pe/companies/hergon-logo.webp" alt="Hergon">
+          <img src="https://bildin.com.pe/companies/tmgi-logo.webp" alt="TMGI">
+        </div>
+        <div class="logo-set" aria-hidden="true">
+          <img src="https://bildin.com.pe/companies/adelante-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/cambrils-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/carmen-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/cumbres-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/dvc-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/entrepisos-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/galilea-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/grupo-flesan-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/grupo-inka-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/inarco-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/la-venturosa-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/llosa-edificaciones-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/vv-bravo-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/alcamo-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/checor-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/brazil-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/los-portales-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/overlay-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/conssolida-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/digital-bricks-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/grau-dvi-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/lider-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/hergon-logo.webp" alt="">
+          <img src="https://bildin.com.pe/companies/tmgi-logo.webp" alt="">
         </div>
       </div>
     </div>
@@ -2627,122 +2944,138 @@
 <!-- PLATAFORMA -->
 <section id="plataforma">
   <div class="shell product-modules">
-    <div class="track-module">
-      <div class="track-copy fade-in">
+    <article class="module-section" id="workforce-track">
+      <header class="module-header fade-in">
         <div class="eyebrow">Workforce Track</div>
-        <h2>Workforce Track</h2>
-        <div class="track-subtitle">Controla mano de obra, avances y productividad desde el campo</div>
-        <p>Registra tareo, avances y rendimiento de cuadrillas para distribuir mejor el tiempo, detectar desvíos y simplificar el cierre de nómina.</p>
-        <ul class="track-benefits">
-          <li>Asigna horas y avances por actividad desde obra</li>
-          <li>Mide productividad real por frente o cuadrilla</li>
-          <li>Detecta desvíos de rendimiento a tiempo</li>
-          <li>Calcula nómina con datos reales de asistencia y tareo</li>
-          <li>Reduce consolidaciones manuales para tareo y seguimiento</li>
-        </ul>
-      </div>
-      <div class="workforce-carousel fade-in" style="transition-delay:0.12s" data-workforce-carousel>
-        <div class="workforce-stage">
-          <div class="workforce-slide active">
-            <div class="screen-stack">
-              <article class="screen-card is-phone-only">
-                <div class="phone-frame">
-                  <img class="screen-image" src="img/1.jpeg" alt="Registro de tareo en campo">
-                </div>
-              </article>
-              <article class="screen-card is-phone-only">
-                <div class="phone-frame">
-                  <img class="screen-image" src="img/2.jpeg" alt="Seguimiento de avance y rendimiento">
-                </div>
-              </article>
-              <article class="screen-card is-phone-only">
-                <div class="phone-frame">
-                  <img class="screen-image" src="img/3.jpeg" alt="Lectura consolidada para oficina">
-                </div>
-              </article>
-            </div>
-          </div>
-          <div class="workforce-slide">
-            <div class="laptop-frame">
-              <div class="laptop-screen">
-                <img src="img/monitor_workforce1.png" alt="Vista de Workforce Track en monitor">
-              </div>
-            </div>
-          </div>
-          <div class="workforce-slide">
-            <div class="laptop-frame">
-              <div class="laptop-screen">
-                <img src="img/monitor_workforce2.png" alt="Vista de nómina y tareo en monitor">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="workforce-dots" aria-hidden="true">
-          <span class="workforce-dot active"></span>
-          <span class="workforce-dot"></span>
-          <span class="workforce-dot"></span>
-        </div>
-      </div>
-    </div>
+        <h2>Workforce Track: <span>El control de tu mano de obra, ahora en tiempo real.</span></h2>
+      </header>
 
-    <div class="track-module is-material">
-      <div class="material-showcase material-carousel fade-in" style="transition-delay:0.12s" data-material-carousel>
-        <div class="material-stage">
-          <div class="material-slide active">
-            <div class="material-phone-row">
-              <div class="phone-frame"><img class="screen-image" src="img/Material Track/cel1.jpeg" alt="Material Track en celular"></div>
-              <div class="phone-frame"><img class="screen-image" src="img/Material Track/cel2.jpeg" alt="Material Track en celular"></div>
-            </div>
-          </div>
-          <div class="material-slide">
-            <div class="material-phone-row">
-              <div class="phone-frame"><img class="screen-image" src="img/Material Track/cel3.jpeg" alt="Material Track en celular"></div>
-              <div class="phone-frame"><img class="screen-image" src="img/Material Track/cel4.jpeg" alt="Material Track en celular"></div>
-            </div>
-          </div>
-          <div class="material-slide">
-            <div class="material-monitor-row">
-              <div class="laptop-frame"><div class="laptop-screen"><img src="img/Material Track/monitor1.png" alt="Material Track en monitor"></div></div>
-            </div>
-          </div>
-          <div class="material-slide">
-            <div class="material-monitor-row">
-              <div class="laptop-frame"><div class="laptop-screen"><img src="img/Material Track/monitor2.png" alt="Material Track en monitor"></div></div>
-            </div>
-          </div>
-          <div class="material-slide">
-            <div class="material-monitor-row">
-              <div class="laptop-frame"><div class="laptop-screen"><img src="img/Material Track/monitor3.png" alt="Material Track en monitor"></div></div>
-            </div>
-          </div>
-          <div class="material-slide">
-            <div class="material-monitor-row">
-              <div class="laptop-frame"><div class="laptop-screen"><img src="img/Material Track/monitor4.png" alt="Material Track en monitor"></div></div>
-            </div>
-          </div>
+      <div class="module-row">
+        <div class="module-copy fade-in">
+          <h3>Asigna horas desde el frente de trabajo</h3>
+          <p>El celular reemplaza el papel y permite registrar tareo, avances y asistencia directamente desde obra, con datos listos para revisar en oficina.</p>
+          <ul class="track-benefits">
+            <li>Registra horas por trabajador, cuadrilla y actividad</li>
+            <li>Reduce errores de digitación y reportes duplicados</li>
+            <li>Centraliza la información sin esperar el cierre del día</li>
+          </ul>
         </div>
-        <div class="material-dots" aria-hidden="true">
-          <span class="material-dot active"></span>
-          <span class="material-dot"></span>
-          <span class="material-dot"></span>
-          <span class="material-dot"></span>
-          <span class="material-dot"></span>
-          <span class="material-dot"></span>
+        <div class="module-media fade-in" style="transition-delay:0.12s">
+          <div class="screen-stack showcase-phone-trio" aria-label="Registro móvil de Workforce Track">
+            <article class="screen-card is-phone-only">
+              <div class="phone-frame">
+                <img class="screen-image" src="img/1.jpeg" alt="Registro de tareo en campo">
+              </div>
+            </article>
+            <article class="screen-card is-phone-only">
+              <div class="phone-frame">
+                <img class="screen-image" src="img/2.jpeg" alt="Seguimiento de avance y rendimiento">
+              </div>
+            </article>
+            <article class="screen-card is-phone-only">
+              <div class="phone-frame">
+                <img class="screen-image" src="img/3.jpeg" alt="Lectura consolidada para oficina">
+              </div>
+            </article>
+          </div>
         </div>
       </div>
-      <div class="track-copy fade-in">
+
+      <div class="module-row is-reversed">
+        <div class="module-media is-wide fade-in">
+          <div class="laptop-frame">
+            <div class="laptop-screen">
+              <img src="img/monitor_workforce1.png" alt="Dashboard de Workforce Track con gráfica de HH acumuladas">
+            </div>
+          </div>
+        </div>
+        <div class="module-copy fade-in" style="transition-delay:0.12s">
+          <h3>Mide la productividad y detecta desvíos al instante</h3>
+          <p>La información capturada en campo se convierte en gráficos de HH acumuladas, productividad y rendimiento para que gerencia actúe antes de que el desvío impacte costo o plazo.</p>
+          <ul class="track-benefits">
+            <li>Compara horas reales contra el avance ejecutado</li>
+            <li>Visualiza tendencias por día, semana y categoría</li>
+            <li>Identifica actividades que consumen más horas de lo previsto</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="module-row">
+        <div class="module-copy fade-in">
+          <h3>Simplifica tu cierre de nómina</h3>
+          <p>Consolida asistencia, tareo y ratios en una sola vista para reducir horas extra administrativas y exportar información lista para validación.</p>
+          <ul class="track-benefits">
+            <li>Evita cierres manuales con múltiples archivos Excel</li>
+            <li>Ordena horas ganadas, costos y ratios por actividad</li>
+            <li>Entrega datos trazables para supervisión y administración</li>
+          </ul>
+        </div>
+        <div class="module-media fade-in" style="transition-delay:0.12s">
+          <div class="laptop-frame">
+            <div class="laptop-screen">
+              <img src="img/monitor_workforce2.png" alt="Vista de productividad y tabla de trabajadores de Workforce Track">
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="module-section" id="material-track">
+      <header class="module-header fade-in">
         <div class="eyebrow">Material Track</div>
-        <h2>Material Track</h2>
-        <div class="track-subtitle">Controla consumo, desperdicio y trazabilidad de materiales</div>
-        <p>Registra ingresos, salidas y uso por actividad para anticipar desvíos, reducir pérdidas y mejorar la coordinación entre almacén, oficina técnica y obra.</p>
-        <ul class="track-benefits">
-          <li>Monitorea consumo real por actividad</li>
-          <li>Detecta desvíos antes de que escalen</li>
-          <li>Reduce pérdidas y validaciones manuales</li>
-          <li>Mejora la trazabilidad entre almacén y obra</li>
-        </ul>
+        <h2>Material Track: <span>Trazabilidad total, desde el almacén hasta la obra.</span></h2>
+      </header>
+
+      <div class="module-row">
+        <div class="module-copy fade-in">
+          <h3>Controla ingresos, salidas y consumo real</h3>
+          <p>Registra cada movimiento desde el celular para ordenar la operación entre almacén y obra, reducir desperdicios y mantener trazabilidad por orden, recurso y responsable.</p>
+          <ul class="track-benefits">
+            <li>Consulta órdenes, recepciones y retiros desde campo</li>
+            <li>Reduce pérdidas por consumos no registrados</li>
+            <li>Valida cantidades recibidas antes de consolidarlas</li>
+          </ul>
+        </div>
+        <div class="module-media fade-in" style="transition-delay:0.12s">
+          <div class="screen-stack showcase-phone-trio" aria-label="Orden 00075 en Material Track">
+            <article class="screen-card is-phone-only">
+              <div class="phone-frame">
+                <img class="screen-image" src="img/Material Track/cel2.jpeg" alt="Listado de órdenes con la Orden 00075">
+              </div>
+            </article>
+            <article class="screen-card is-phone-only">
+              <div class="phone-frame">
+                <img class="screen-image" src="img/Material Track/cel3.jpeg" alt="Detalle de la Orden 00075 en Material Track">
+              </div>
+            </article>
+            <article class="screen-card is-phone-only">
+              <div class="phone-frame">
+                <img class="screen-image" src="img/Material Track/cel4.jpeg" alt="Recepciones de la Orden 00075 en Material Track">
+              </div>
+            </article>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <div class="module-row is-reversed">
+        <div class="module-media is-wide fade-in">
+          <div class="laptop-frame">
+            <div class="laptop-screen">
+              <img src="img/Material Track/monitor1.png" alt="Dashboard de Material Track con valor en stock">
+            </div>
+          </div>
+        </div>
+        <div class="module-copy fade-in" style="transition-delay:0.12s">
+          <h3>Monitorea tu inventario y evita quiebres de stock</h3>
+          <p>Visualiza el valor en stock, reservas y recursos disponibles para tomar decisiones de abastecimiento con impacto financiero claro.</p>
+          <ul class="track-benefits">
+            <li>Controla el valor financiero de materiales disponibles</li>
+            <li>Anticipa compras antes de frenar el avance en obra</li>
+            <li>Consulta stock actual, reservado y costo promedio</li>
+          </ul>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -3010,30 +3343,28 @@
     }, 3200);
   }
 
-  const workforceCarousel = document.querySelector('[data-workforce-carousel]');
-  if (workforceCarousel) {
-    const workforceSlides = workforceCarousel.querySelectorAll('.workforce-slide');
-    const workforceDots = workforceCarousel.querySelectorAll('.workforce-dot');
-    let workforceIndex = 0;
+  const logoMarquee = document.querySelector('.logo-marquee');
+  if (logoMarquee) {
+    const logoTrack = logoMarquee.querySelector('.logo-marquee-track');
+    const leftArrow = logoMarquee.querySelector('.logo-arrow.is-left');
+    const rightArrow = logoMarquee.querySelector('.logo-arrow.is-right');
+    let logoTimer;
 
-    window.setInterval(() => {
-      workforceIndex = (workforceIndex + 1) % workforceSlides.length;
-      workforceSlides.forEach((slide, index) => slide.classList.toggle('active', index === workforceIndex));
-      workforceDots.forEach((dot, index) => dot.classList.toggle('active', index === workforceIndex));
-    }, 3600);
-  }
+    const cueLogoMotion = (direction) => {
+      if (!logoTrack) return;
+      window.clearTimeout(logoTimer);
+      logoTrack.style.animationPlayState = 'running';
+      logoTrack.style.animationDuration = '18s';
+      logoTrack.style.animationDirection = direction;
+      logoTimer = window.setTimeout(() => {
+        logoTrack.style.animationPlayState = '';
+        logoTrack.style.animationDuration = '';
+        logoTrack.style.animationDirection = '';
+      }, 1600);
+    };
 
-  const materialCarousel = document.querySelector('[data-material-carousel]');
-  if (materialCarousel) {
-    const materialSlides = materialCarousel.querySelectorAll('.material-slide');
-    const materialDots = materialCarousel.querySelectorAll('.material-dot');
-    let materialIndex = 0;
-
-    window.setInterval(() => {
-      materialIndex = (materialIndex + 1) % materialSlides.length;
-      materialSlides.forEach((slide, index) => slide.classList.toggle('active', index === materialIndex));
-      materialDots.forEach((dot, index) => dot.classList.toggle('active', index === materialIndex));
-    }, 3600);
+    if (leftArrow) leftArrow.addEventListener('click', () => cueLogoMotion('reverse'));
+    if (rightArrow) rightArrow.addEventListener('click', () => cueLogoMotion('normal'));
   }
 
   document.querySelectorAll('.faq-question').forEach(btn => {
